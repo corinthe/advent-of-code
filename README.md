@@ -1,5 +1,5 @@
-# Advent of Code - Máté László
-My solutions to the [Advent of Code](https://adventofcode.com/) challenges
+# Advent of Code - Antoine Rassart (taken from Máté László)
+My solutions to the [Advent of Code](https://adventofcode.com/) challenges (starting in 2019)
 - Using a functional programming style in Scala
 - With no external dependencies (for the challenge)
 - To run a puzzle pass the year and the day as parameters. E.g: `sbt 'run 2018 15'`
