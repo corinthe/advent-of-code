@@ -16,6 +16,13 @@ object Day02 extends SimpleCommonPuzzle[Array[Int], Int, Int] {
   override def part1(integers: Array[Int]): Int =
     runProgram(integers)(0)
 
+  override def part2(integers: Array[Int]): Int =
+    (for (x <- 0 to 99; y <- 0 to 99) yield (x, y))
+      .flatMap({
+        case (noun, verb) if runProgram(integers, noun, verb)(0) == TARGET_OUTPUT => Some((100 * noun) + verb)
+        case (_, _) => None
+      })(0)
+
   def runProgram(integers: Array[Int], noun: Int = 12, verb: Int = 2): Array[Int] = {
 
     @tailrec
@@ -24,7 +31,7 @@ object Day02 extends SimpleCommonPuzzle[Array[Int], Int, Int] {
       case 1 => runStep(op(array, position, (x, y) => x + y), position + 4)
       case 2 => runStep(op(array, position, (x, y) => x * y), position + 4)
       case 99 => array
-      case _ => throw new IllegalStateException("Erreur")
+      case _ => throw new IllegalStateException("Encountering an unknown opcode means something went wrong.")
     }
 
     def op(array: Array[Int], position: Int, operation: (Int, Int) => Int): Array[Int] =
@@ -35,11 +42,4 @@ object Day02 extends SimpleCommonPuzzle[Array[Int], Int, Int] {
 
     runStep(integers.updated(1, noun).updated(2, verb), 0)
   }
-
-  override def part2(integers: Array[Int]): Int =
-    (for (x <- 0 to 99; y <- 0 to 99) yield (x, y))
-      .flatMap({
-        case (noun, verb) if runProgram(integers, noun, verb)(0) == TARGET_OUTPUT => Some((100 * noun) + verb)
-        case (_, _) => None
-      })(0)
 }
