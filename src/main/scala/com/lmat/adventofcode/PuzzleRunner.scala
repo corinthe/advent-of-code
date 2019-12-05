@@ -1,14 +1,18 @@
 package com.lmat.adventofcode
 
 object PuzzleRunner extends App {
-  val year = args.headOption.map(_.toInt).getOrElse(2017)
+  val year = args.headOption.map(_.toInt).getOrElse(2019)
   val day  = args.lift(1).map(_.toInt).getOrElse(1)
 
-  def puzzleMap: Map[(Int, Int), SimpleCommonPuzzle[_ >: Seq[Int] with Array[Int] <: Object, Int, Int]] = Map(
+  def puzzleMap = Map(
+
+    //2018
+    (2018, 1) -> year2018.Day01,
 
     // 2019
     (2019, 1)  -> year2019.Day01,
     (2019, 2)  -> year2019.Day02,
+    (2019, 3)  -> year2019.Day03,
   )
 
   run(puzzleMap, year, day)

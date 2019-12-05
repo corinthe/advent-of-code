@@ -19,10 +19,4 @@ class Day01Test extends AnyFunSuite with TableDrivenPropertyChecks {
       assert(fuel(mass) == result)
     }
   }
-
-  test("Day01 - Part 2") {
-    forAll(masses) { (mass, _, result) =>
-      assert(fuel2(mass) == result)
-    }
-  }
 }
