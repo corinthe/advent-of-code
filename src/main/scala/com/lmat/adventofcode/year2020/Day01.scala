@@ -14,15 +14,15 @@ object Day01 extends SimpleCommonPuzzle[Seq[Int], Int, Int] {
   override def part1(expanses: Seq[Int]): Int = {
     expanses
       .combinations(2)
-      .find(duo => duo.sum == TARGET_SUM)
-      .map(duo => duo.product)
-      .getOrElse(0)
+      .find(_.sum == TARGET_SUM)
+      .map(_.product)
+      .get
   }
 
   override def part2(expanses: Seq[Int]): Int =
     expanses
       .combinations(3)
-      .find(combination => combination.sum == TARGET_SUM)
-      .map(combination => combination.product)
-      .getOrElse(0)
+      .find(_.sum == TARGET_SUM)
+      .map(_.product)
+      .get
 }
