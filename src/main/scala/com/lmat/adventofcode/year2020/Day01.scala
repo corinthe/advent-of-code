@@ -11,13 +11,12 @@ object Day01 extends SimpleCommonPuzzle[Seq[Int], Int, Int] {
   override def parse(resource: String): Seq[Int] =
     readResource(resource).flatMap(row => Try(row.toInt).toOption)
 
-  override def part1(expanses: Seq[Int]): Int = {
+  override def part1(expanses: Seq[Int]): Int =
     expanses
       .combinations(2)
       .find(_.sum == TARGET_SUM)
       .map(_.product)
       .get
-  }
 
   override def part2(expanses: Seq[Int]): Int =
     expanses
