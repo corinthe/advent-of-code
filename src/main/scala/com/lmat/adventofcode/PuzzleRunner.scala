@@ -1,8 +1,8 @@
 package com.lmat.adventofcode
 
 object PuzzleRunner extends App {
-  val year = args.headOption.map(_.toInt).getOrElse(2019)
-  val day  = args.lift(1).map(_.toInt).getOrElse(1)
+  val year = args.headOption.map(_.toInt).getOrElse(2020)
+  val day  = args.lift(1).map(_.toInt).getOrElse(9)
 
   def puzzleMap = Map(
 
@@ -22,6 +22,7 @@ object PuzzleRunner extends App {
     (2020, 6) -> year2020.Day06,
     (2020, 7) -> year2020.Day07,
     (2020, 8) -> year2020.Day08,
+    (2020, 9) -> year2020.Day09,
   )
 
   run(puzzleMap, year, day)
