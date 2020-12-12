@@ -28,11 +28,14 @@ object Day11Definitions {
       case DownRight => Position(i + 1, j + 1)
     }
 
+    def isValid(arr: Array[Array[Status]]): Boolean =
+      i >= 0 && i < arr.length && j > 0 && j < arr(0).length
+
   }
 
   case class Layout(positions: Array[Array[Status]]) {
     def next(part: Int): Layout =
-      if(part == 1) next(directNeighbours, 4)
+      if (part == 1) next(directNeighbours, 4)
       else next(visibleNeighbours, 5)
 
     def next(f: Position => Seq[Status], occupiedLimit: Int): Layout =
@@ -52,32 +55,24 @@ object Day11Definitions {
       res.filterNot(_ == from)
     }
 
-    def next2(): Layout =
-      Layout(positions.zipWithIndex.map { case (lines, i) => lines.zipWithIndex.map { case (status, j) =>
-        if (status == Empty && !visibleNeighbours((i, j)).contains(Occupied)) Occupied
-        else if (status == Occupied && visibleNeighbours((i, j)).count(_ == Occupied) >= 5) Empty
-        else status
-      }
-      })
+    def getStatus(pos: Position): Status = positions(pos.i)(pos.j)
 
     def visibleNeighbours(from: Position): Seq[Status] = {
       @tailrec
       def visibleNeighboursRec(currentPos: Position, direction: Direction): Option[Status] =
-        if (currentPos.i < 0 || currentPos.i >= positions.length || currentPos.j < 0 || currentPos.j >= positions(0).length) None
-        else if (currentPos != from && getStatus(currentPos) != Floor) Some(getStatus(currentPos))
+        if (!currentPos.isValid(positions)) None
+        else if (getStatus(currentPos) != Floor) Some(getStatus(currentPos))
         else visibleNeighboursRec(currentPos.go(direction), direction)
 
       Seq(Up, Down, Left, Right, UpLeft, UpRight, DownLeft, DownRight)
-        .flatMap(d => visibleNeighboursRec(from, d))
+        .flatMap(d => visibleNeighboursRec(from.go(d), d))
     }
-
-    def getStatus(pos: Position): Status = positions(pos.i)(pos.j)
 
     override def equals(obj: Any): Boolean = obj match {
       case o: Layout => o.positions.flatten.toSeq == positions.flatten.toSeq
     }
 
-    override def toString: String = positions.map(line => line.mkString("")).mkString("\n")
+    override def toString: String = positions.map(line => line.mkString).mkString("\n")
   }
 
   case object Up extends Direction
@@ -124,21 +119,21 @@ object Day11 extends SimpleCommonPuzzle[Layout, Int, Int] {
       }))
   }
 
-  private def computeResult(input: Layout, part: Int): Int =
-    LazyList
-    .iterate(input)(_.next(part))
-    .sliding(2)
-    .takeWhile(c => c.head != c.last)
-    .map(_.last)
-    .toSeq
-    .last
-    .positions
-    .flatten
-    .count(_ == Occupied)
-
   override def part1(input: Layout): Int = computeResult(input, 1)
 
   override def part2(input: Layout): Int = computeResult(input, 2)
+
+  private def computeResult(input: Layout, part: Int): Int =
+    LazyList
+      .iterate(input)(_.next(part))
+      .sliding(2)
+      .takeWhile(c => c.head != c.last)
+      .map(_.last)
+      .toSeq
+      .last
+      .positions
+      .flatten
+      .count(_ == Occupied)
 
 
 }
