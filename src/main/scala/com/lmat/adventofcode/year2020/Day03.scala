@@ -10,15 +10,15 @@ object Day03 extends SimpleCommonPuzzle[Seq[String], Int, BigInt] {
   override def parse(resource: String): Seq[String] =
     readResource(resource)
 
-  def isTree(char: Char): Boolean = char == '#'
+  override def part1(input: Seq[String]): Int =
+    countTrees(input, 3)
 
   def countTrees(input: Seq[String], right: Int): Int =
     input
       .zip(from(0, right))
-      .count({case (line, pos) => isTree(line.charAt(pos % line.length))})
+      .count({ case (line, pos) => isTree(line.charAt(pos % line.length)) })
 
-  override def part1(input: Seq[String]): Int =
-    countTrees(input, 3)
+  def isTree(char: Char): Boolean = char == '#'
 
   override def part2(input: Seq[String]): BigInt = {
 
@@ -37,8 +37,8 @@ object Day03 extends SimpleCommonPuzzle[Seq[String], Int, BigInt] {
     )
 
     params
-      .map({case (right, down) => (filterLines(input, down), right)})
-      .map({case (lines, right) => countTrees(lines, right)})
+      .map { case (right, down) => (filterLines(input, down), right) }
+      .map { case (lines, right) => countTrees(lines, right) }
       .map(BigInt(_))
       .product
 

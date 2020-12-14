@@ -4,8 +4,6 @@ import com.lmat.adventofcode.SimpleMultiPuzzle
 import com.lmat.adventofcode.year2020.Day13Definitions.{Id, Order, Timestamp}
 import com.lmat.util.Files.readResource
 
-import scala.annotation.tailrec
-
 object Day13Definitions {
   type Id = Int
   type Timestamp = Int
