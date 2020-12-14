@@ -18,7 +18,7 @@ object Day13 extends SimpleMultiPuzzle[(Timestamp, Seq[Id]), Int, Seq[(Order, Id
     (r.head.toInt, parse1Line(r.last))
   }
 
-  def parse1Line(input: String): Seq[Id] = input.split(",").flatMap(_.toIntOption)
+  def parse1Line(input: String): Seq[Id] = input.split(",").flatMap(_.toIntOption).toSeq
 
   override def part1(input: (Timestamp, Seq[Id])): Int = {
     def bussesPassOn(time: Timestamp): Option[(Timestamp, Id)]=

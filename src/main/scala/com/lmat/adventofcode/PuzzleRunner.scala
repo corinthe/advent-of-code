@@ -27,6 +27,7 @@ object PuzzleRunner extends App {
     (2020, 11) -> year2020.Day11,
     (2020, 12) -> year2020.Day12,
     (2020, 13) -> year2020.Day13,
+    (2020, 14) -> year2020.Day14,
     (2020, 15) -> year2020.Day15,
     (2020, 16) -> year2020.Day16,
   )
