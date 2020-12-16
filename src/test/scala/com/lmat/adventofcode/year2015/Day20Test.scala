@@ -2,7 +2,6 @@ package com.lmat.adventofcode.year2015
 
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.prop.TableDrivenPropertyChecks
-import com.lmat.adventofcode.year2015.Day20._
 
 class Day20Test extends AnyFunSuite with TableDrivenPropertyChecks {
   test("Day20 - Part 1") {

@@ -1,6 +1,6 @@
 package com.lmat.adventofcode.year2015
 
-import com.lmat.adventofcode.year2015.Day10.lookAndSay
+import .lookAndSay
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.prop.TableDrivenPropertyChecks
 
