@@ -6,6 +6,8 @@ object PuzzleRunner extends App {
 
   def puzzleMap = Map(
 
+    (2015, 1) -> year2015.Day01,
+
     //2018
     (2018, 1) -> year2018.Day01,
 

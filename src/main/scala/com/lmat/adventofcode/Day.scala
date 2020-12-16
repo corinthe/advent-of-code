@@ -2,8 +2,6 @@ package com.lmat.adventofcode
 
 import com.lmat.util.Files.readResource
 
-import scala.util.Try
-
 object Day extends SimpleCommonPuzzle[Seq[String], Int, Int] {
   override def parse(resource: String): Seq[String] =
     readResource(resource)
