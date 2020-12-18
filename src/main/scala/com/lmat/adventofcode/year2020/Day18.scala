@@ -1,89 +1,42 @@
 package com.lmat.adventofcode.year2020
 
-import atto.Atto.{bigInt, char, int, ok, toParserOps}
-import atto.Parser
 import com.lmat.adventofcode.SimpleCommonPuzzle
 import com.lmat.util.Files.readResource
 
+import scala.util.matching.Regex
+
 object Day18 extends SimpleCommonPuzzle[Seq[String], BigInt, BigInt] {
+  private val add: Regex = "(.+)\\+(.+)".r
+  private val mul: Regex = "(.+)\\*(.+)".r
+  private val par: Regex = raw"(.*)\(([^\(\)]+)\)(.*)".r
+  private val addOrMul: Regex = "(.+)([+*])(.+)".r
 
-  lazy val Expr1: Parser[BigInt] = for {
-    lhs  <- Factor1
-    next <- Expr_prim1
-  } yield next(lhs)
-
-  lazy val Expr_prim1: Parser[BigInt => BigInt] = {
-    val p1 = for {
-      _    <- char('+')
-      rhs  <- Factor1
-      next <- Expr_prim1
-    } yield (lhs: BigInt) => next(lhs + rhs)
-    val p2 = for {
-      _    <- char('*')
-      rhs  <- Factor1
-      next <- Expr_prim1
-    } yield (lhs: BigInt) => next(lhs * rhs)
-    val p3 = ok((lhs: BigInt) => lhs)
-    p1 | p2 | p3
+  def eval1(expr: String): BigInt = {
+    expr match {
+      case par(left, expr, right) => eval1(s"$left${eval1(expr)}$right")
+      case addOrMul(x, op, y) => op match {
+        case "+" => eval1(x) + eval1(y)
+        case "*" => eval1(x) * eval1(y)
+      }
+      case n => BigInt(n)
+    }
   }
 
-  lazy val Factor1: Parser[BigInt] = {
-    val p1 = for {
-      _ <- char('(')
-      e <- Expr1
-      _ <- char(')')
-    } yield e
-    val p2 = bigInt
-    p1 | p2
-  }
-
-  lazy val Expr2: Parser[BigInt] = for {
-    lhs  <- Term2
-    next <- Expr_prim2
-  } yield next(lhs)
-
-  lazy val Expr_prim2: Parser[BigInt => BigInt] = {
-    val p1 = for {
-      _    <- char('*')
-      rhs  <- Term2
-      next <- Expr_prim2
-    } yield (lhs: BigInt) => next(lhs * rhs)
-    val p3 = ok((lhs: BigInt) => lhs)
-    p1 | p3
-  }
-
-  lazy val Term2: Parser[BigInt] = for {
-    lhs  <- Factor2
-    next <- Term_prim2
-  } yield next(lhs)
-
-  lazy val Term_prim2: Parser[BigInt => BigInt] = {
-    val p1 = for {
-      _    <- char('+')
-      rhs  <- Factor2
-      next <- Term_prim2
-    } yield (lhs: BigInt) => next(lhs + rhs)
-    val p3 = ok((lhs: BigInt) => lhs)
-    p1 | p3
-  }
-
-  lazy val Factor2: Parser[BigInt] = {
-    val p1 = for {
-      _ <- char('(')
-      e <- Expr2
-      _ <- char(')')
-    } yield e
-    val p2 = bigInt
-    p1 | p2
-  }
+  def eval2(expr: String): BigInt =
+    expr match {
+      case par(left, expr, right) => eval2(s"$left${eval2(expr)}$right")
+      case mul(x, y) => eval2(x) * eval2(y)
+      case add(x, y) => eval2(x) + eval2(y)
+      case n => BigInt(n)
+    }
 
   override def parse(resource: String): Seq[String] =
-    readResource(resource).map(_.replace(" ", ""))
+    readResource(resource).map(_.filterNot(c => c == ' '))
 
   override def part1(input: Seq[String]): BigInt = {
-    input.flatMap(l => Expr1.parse(l).done.option).sum
+    input.map(eval1).sum
   }
 
   override def part2(input: Seq[String]): BigInt =
-    input.flatMap(l => Expr2.parse(l).done.option).sum
+    input.map(eval2).sum
 }
