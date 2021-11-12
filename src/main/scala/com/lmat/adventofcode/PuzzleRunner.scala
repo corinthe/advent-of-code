@@ -11,6 +11,7 @@ object PuzzleRunner extends App {
 
     //2017
     (2017, 1) ->year2017.Day01,
+    (2017, 2) ->year2017.Day02,
 
     //2018
     (2018, 1) -> year2018.Day01,
