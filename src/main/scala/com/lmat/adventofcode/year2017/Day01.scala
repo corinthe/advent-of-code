@@ -2,27 +2,29 @@ package com.lmat.adventofcode.year2017
 
 import com.lmat.adventofcode.SimpleCommonPuzzle
 import com.lmat.util.Files.readResource
-import com.lmat.util.Sequences.shiftRight
 
-object Day01 extends SimpleCommonPuzzle[String, Int, Int] {
-  override def parse(resource: String): String =
-    readResource(resource).head
+import scala.util.Try
 
-  override def part1(captcha: String): Int =
-    solveCaptcha(1)(captcha)
+object Day01 extends SimpleCommonPuzzle[Seq[Int], Int, Int]{
+  override def parse(resource: String): Seq[Int] =
+    readResource(resource)
+      .flatMap(row => row.split("").toSeq)
+      .flatMap(str => Try(str.toInt).toOption)
 
-  override def part2(captcha: String): Int =
-    solveCaptcha(captcha.length / 2)(captcha)
-
-  def solveCaptcha(shiftAmount: Int)(captcha: String): Int = {
-    val digits  = captcha.toIndexedSeq.map(_.asDigit)
-    val shifted = shiftRight(digits, shiftAmount)
-    sumEqualDigits(digits, shifted)
-  }
-
-  def sumEqualDigits(digits: Seq[Int], digits2: Seq[Int]): Int =
-    (digits zip digits2)
-      .filter { case (a, b) => a == b }
-      .map(_._1)
+  override def part1(input: Seq[Int]): Int =
+    (input :+ input.head)
+      .sliding(2)
+      .filter(group => group.head == group.last)
+      .map(group => group.head)
       .sum
+
+  override def part2(input: Seq[Int]): Int =
+    (input ++ input)
+      .sliding((input.length / 2) + 1)
+      .zipWithIndex
+      .takeWhile(p => p._2 < input.length)
+      .filter(p => p._1.head == p._1.last)
+      .map(p => p._1.head)
+      .sum
+
 }
