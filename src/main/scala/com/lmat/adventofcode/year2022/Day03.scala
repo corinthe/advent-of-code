@@ -23,7 +23,7 @@ object Day03 extends SimpleCommonPuzzle[Seq[String], Int, Int] {
   override def part2(input: Seq[String]): Int =
     input
       .grouped(3)
-      .map(_.reduceLeft((left, right) => left.intersect(right)).head)
+      .map(_.reduce((left, right) => left.intersect(right)).head)
       .map(_.priority)
       .sum
 
