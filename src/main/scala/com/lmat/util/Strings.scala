@@ -7,6 +7,8 @@ object Strings {
   def leftPad(source: String)(pad: Char, length: Int): String =
     (pad.toString * (length - source.length)) + source
 
+  def rightPad(source: String)(pad: Char, length: Int): String =
+    source + (pad.toString * (length - source.length))
 
   /**
     * Find all indexesOf the query string in source
