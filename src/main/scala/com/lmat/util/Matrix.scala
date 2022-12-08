@@ -55,4 +55,16 @@ object Matrix {
 
   def merge[A](matrices: Matrix[Matrix[A]]): Matrix[A] =
     concatVertical[A](matrices.rows.map(concatHorizontal[A]))
+
+  def lefts[A](matrix: Matrix[A], r: Int, c: Int): Vector[A] =
+    matrix.rows(r).take(c)
+
+  def rights[A](matrix: Matrix[A], r: Int, c: Int): Vector[A] =
+    matrix.rows(r).drop(c + 1)
+
+  def ups[A](matrix: Matrix[A], r: Int, c: Int): Vector[A] =
+    matrix.columns(c).take(r)
+
+  def downs[A](matrix: Matrix[A], r: Int, c: Int): Vector[A] =
+    matrix.columns(c).drop(r + 1)
 }

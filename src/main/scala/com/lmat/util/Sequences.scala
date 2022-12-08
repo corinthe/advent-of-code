@@ -4,6 +4,14 @@ import scala.annotation.tailrec
 
 object Sequences {
 
+  implicit class TakeUntilListWrapper[T](list: Vector[T]) {
+    def takeUntil(predicate: T => Boolean): Vector[T] = {
+      list.span(predicate) match {
+        case (head, tail) => head.appendedAll(tail.take(1))
+      }
+    }
+  }
+
   /**
     * Shift left all elements in a circular sequence by the specified amount
     */
