@@ -26,7 +26,5 @@ object Strings {
 object StringExtensions {
   implicit class RichString(val str: String) extends AnyVal {
     def md5: String = MessageDigest.getInstance("MD5").digest(str.getBytes).map("%02X".format(_)).mkString
-
-
   }
 }
