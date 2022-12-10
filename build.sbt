@@ -8,6 +8,7 @@ lazy val root = (project in file("."))
 lazy val dependencies = Seq("org.scalatest" %% "scalatest"   % "3.1.0"  % "test")
 libraryDependencies += "org.tpolecat" %% "atto-core"    % "0.7.0"
 libraryDependencies += "org.tpolecat" %% "atto-refined" % "0.7.0"
+libraryDependencies += "org.scala-graph" %% "graph-core" % "1.13.5"
 
 
 scalacOptions ++= Seq("-deprecation", "-feature")
