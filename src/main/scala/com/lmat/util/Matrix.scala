@@ -14,6 +14,8 @@ case class Matrix[+A](rows: Vector[Vector[A]]) {
 object Matrix {
   val empty: Matrix[Nothing] = Matrix(Vector(Vector()))
 
+  def ofSize[A](s: Int, elem: A) = Matrix(Vector.fill(s)(Vector.fill(s)(elem)))
+
   def flipHorizontal[A](matrix: Matrix[A]): Matrix[A] = Matrix(matrix.rows.map(_.reverse))
   def flipVertical[A]  (matrix: Matrix[A]): Matrix[A] = Matrix(matrix.rows.reverse)
 
