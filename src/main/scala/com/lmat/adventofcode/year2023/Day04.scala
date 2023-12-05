@@ -5,7 +5,7 @@ import com.lmat.util.Files.readResource
 
 import scala.annotation.tailrec
 
-object Day03 extends SimpleCommonPuzzle[Seq[String], Int, Int] {
+object Day04 extends SimpleCommonPuzzle[Seq[String], Int, Int] {
 
   override def parse(resource: String): Seq[String] =
     readResource(resource)
