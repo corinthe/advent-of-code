@@ -23,4 +23,6 @@ object Maths {
     val half = (1 to math.sqrt(n).toInt).filter(n % _ == 0)
     (half ++ half.map(n / _)).toSet
   }
+
+  def manhattan(x1: (Long, Long), x2: (Long, Long)): Long = Math.abs(x1._1 - x2._1) + Math.abs(x1._2 - x2._2)
 }
