@@ -77,7 +77,8 @@ object PuzzleRunner extends App {
     (2023, 4) -> year2023.Day04,
     (2023, 11) -> year2023.Day11,
 
-    (2024, 1) -> year2024.Day01
+    (2024, 1) -> year2024.Day01,
+    (2024, 2) -> year2024.Day02,
 
   )
 
