@@ -13,6 +13,21 @@ case class Matrix[+A](rows: Vector[Vector[A]]) {
 
   override def toString: String = rows.map(_.mkString(" ")).mkString("\n")
 
+  def getNeighbors(pos: (Int, Int)): Seq[(Int, Int)] = {
+    val (i, j) = pos
+    val directions = Seq(
+              (-1, 0),
+      (0, -1),        (0, 1),
+              (1, 0),
+    )
+
+    directions
+      .map { case (di, dj) => (i + di, j + dj) }
+      .filter {
+        case (ni, nj) => (ni >= 0) && (ni < rows.length) && (nj >= 0) && (nj < columns.length)
+      }
+  }
+
   def findAllPositions[B >: A](elem: B): Seq[(Int, Int)] = {
     for {
       (row, rowIndex) <- rows.zipWithIndex
